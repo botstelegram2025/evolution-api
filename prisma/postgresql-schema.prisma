@@ -1,8 +1,5 @@
 // This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+ // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -10,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL")  // CORRIGIDO
 }
 
 enum InstanceConnectionStatus {
@@ -150,7 +147,6 @@ model Contact {
   @@index([remoteJid])
   @@index([instanceId])
 }
-
 model Message {
   id                           String          @id @default(cuid())
   key                          Json            @db.JsonB
@@ -509,7 +505,6 @@ model Template {
   Instance   Instance  @relation(fields: [instanceId], references: [id], onDelete: Cascade)
   instanceId String
 }
-
 model Dify {
   id              String           @id @default(cuid())
   enabled         Boolean          @default(true) @db.Boolean
@@ -730,9 +725,6 @@ model Evoai {
   ignoreJids      Json?
   splitMessages   Boolean?         @default(false) @db.Boolean
   timePerChar     Int?             @default(50) @db.Integer
-  triggerType     TriggerType?
-  triggerOperator TriggerOperator?
-  triggerValue    String?
   createdAt       DateTime?        @default(now()) @db.Timestamp
   updatedAt       DateTime         @updatedAt @db.Timestamp
   Instance        Instance         @relation(fields: [instanceId], references: [id], onDelete: Cascade)
